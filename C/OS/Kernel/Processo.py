@@ -30,10 +30,14 @@ class Processo(threading.Thread):
             self.kernel.passo()
             self.evento.wait()
             #TODO uma possibilidade do programa acabar.
-        pass
+        #Apos a conclusao, eh necessario fazer a chamada end
+        self.end()
 
     def passo(self):
         self.evento.set()
+
+    def end(self):
+        pass
 
 
 # exemplo de argumentos infinitos
