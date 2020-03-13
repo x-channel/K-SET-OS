@@ -5,6 +5,7 @@ Repositório do simulador produzido para a disciplina de Sistemas Operacionais e
 ## Observações
 
 Devido a implementação, o simulador provavelmente não será compatível com classes.
+
 Os SCRIPTS deverão usar self.FUNCAO(PARAMETRO) para fazer chamadas ao sistema.
 
 
