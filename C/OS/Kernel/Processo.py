@@ -14,6 +14,8 @@ class Processo(threading.Thread):
         self.usuario = usuario
         self.identidade = identidade #id unico do processo
         self.kernel = kernel #kernel do SO
+
+        ## TODO preprocessamento
         self.programa = programa.split("\n") #codigo fonte do programa em python
         self.args = args #argumentos para o processo
         self.__evento = threading.Event() #o evento que vai pausar a tread
@@ -27,11 +29,11 @@ class Processo(threading.Thread):
     def run(self):
         linha = 0
         #Este loop varre o programa linha a linha
-        #TODO montar o try and catch
         try:
-            ## TODO isso precisa ser reformulado
+            #### TODO isso precisa ser reformulado
             ## Talvez a melhor forma seja inserir clear wait no programa.
-            ## Porem no momento eh valido os programas da forma que estao
+            ## Porem no momento eh valido os programas da forma que estao.
+            ## Porem dessa nova forma a avaliacao eh atomica.
             while linha != len(self.programa):
                 #TODO contar o tempo de cada operacao
                 self.__evento.clear()
@@ -47,6 +49,7 @@ class Processo(threading.Thread):
         #Apos a conclusao, eh necessario fazer a chamada end
         self.fim()
 
+    ##Esse metodo permite que o processo execute a proxima linha
     def passo(self):
         self.__evento.set()
 
