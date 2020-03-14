@@ -8,7 +8,7 @@ Devido a implementação, o simulador provavelmente não será compatível com c
 
 Os SCRIPTS deverão usar self.FUNCAO(PARAMETRO) para fazer chamadas ao sistema.
 
-Os scripts serão preprocessados para poderem rodar dentro da classe Processo. Uma das caracteristicas é a declaração do objeto chamado kernel. Apagar todos os comentários; Apagar linhas em branco; Adicionar evento.clear() e evento.wait() entre todas as linhas para permitir a preempção; Substituir algumas chamadas como print() por kernel.print().
+Os scripts serão preprocessados para poderem rodar dentro da classe Processo. Uma das caracteristicas é a declaração do objeto chamado kernel. Apagar todos os comentários; Apagar linhas em branco; Adicionar evento.clear() e evento.wait() entre todas as linhas para permitir a preempção; Substituir algumas chamadas como print() por kernel.print(); Adicionar kernel.fim() na última linha.
 
 
 ## Chamadas do sistema
@@ -30,5 +30,5 @@ Está em inglês por fazer a mesma coisa que a função build in.
 Envia um texto para o kernel imprimir na tela.
 Isso pode parecer desnecessário, mas o simulador todo é desnecessário. Então vamos apenas abrir um sorriso e se divertir com esses detalhes.
 
-### syscall.fim()
+### kernel.fim()
 Avisa ao SO que o processo foi concluído.
