@@ -18,12 +18,13 @@ class Processo(threading.Thread):
         ## TODO preprocessamento
         self.programa = programa.split("\n") #codigo fonte do programa em python
         self.args = args #argumentos para o processo
+
+        
         self.__evento = threading.Event() #o evento que vai pausar a tread
 
         self.entrada = []
         self.saida = []
         
-        self.__deltaTime = 0.0
         self.__tempoTotal = 0.0
 
     def run(self):
@@ -52,6 +53,11 @@ class Processo(threading.Thread):
     ##Esse metodo permite que o processo execute a proxima linha
     def passo(self):
         self.__evento.set()
+
+
+    ##Pausado?
+    def pause(self):
+        return not (self.__evento.is_set())
 
     
     def fim(self):
@@ -83,6 +89,7 @@ processinho = Processo("Alexandre Frota", "SYSTEMA", "21", None, prog, "aaa", "b
 # botando ele para funcionar na manivela
 processinho.start()
 time.sleep(0.1)
+print(processinho.pause())
 processinho.passo()
 time.sleep(0.1)
 processinho.passo()
