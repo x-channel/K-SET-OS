@@ -12,3 +12,7 @@ class Escalonador(threading.Thread):
         self.contador = 2 # Vai garantir que haja um PID unico
 
         self.tabela = []
+        self.fila = []
+
+    def run(self):
+        pass
