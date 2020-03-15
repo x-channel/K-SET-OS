@@ -13,7 +13,7 @@ Os scripts serão preprocessados para poderem rodar dentro da classe Processo. U
 
 ## Chamadas do sistema
 
-### kernel.global(variavel, *args)
+### kernel.global(variavel, valor, sincronizada = False)
 Cria ou altera uma variável global.
 
 ### kernel.sincronizar(variavel)
