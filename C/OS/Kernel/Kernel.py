@@ -21,3 +21,5 @@ class Kernel(threading.Thread):
 
 
 kn = Kernel()
+
+print(__name__)
