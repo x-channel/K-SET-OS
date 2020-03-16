@@ -15,9 +15,9 @@ class Kernel(threading.Thread):
 
         ##Identidade do processo Kernel
         self.identidade = 1
-        
+
         ##Aqui estarao as variaveis globais
         self.globais = {} ##VARIAVEL: (VALOR, SINCR)
-        
+
 
 kn = Kernel()
