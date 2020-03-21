@@ -16,6 +16,9 @@ class Processo(threading.Thread):
         self.kernel = kernel #kernel do SO
 
         ## TODO preprocessamento
+        print(args)
+        self.programa = programa%args
+        print(self.programa)
         self.programa = programa.split("\n") #codigo fonte do programa em python
         self.args = args #argumentos para o processo
 
@@ -84,7 +87,7 @@ print("Ai")
 print("Ui")
 print(self.args[0])"""
 
-processinho = Processo("Alexandre Frota", "SYSTEMA", "21", None, prog, "aaa", "bbb")
+processinho = Processo("Alexandre Frota", "SYSTEMA", "21", None, prog)
 
 # botando ele para funcionar na manivela
 processinho.start()

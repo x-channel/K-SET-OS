@@ -2,7 +2,7 @@ import threading
 import time
 
 class Escalonador(threading.Thread):
-    def __init__(self, kernel):
+    def __init__(self, kernel, quantum):
         threading.Thread.__init__(self, name="Escalonador")
         self.nome = "Escalonador"
         self.usuario = "SISTEMA"

@@ -4,13 +4,15 @@ import Escalonador
 import Processo
 
 class Kernel(threading.Thread):
-    def __init__(self):
+    def __init__(self, usuario, quantum):
         threading.Thread.__init__(self, name = "Kernel")
         self.nome = "Kernel"
         self.usuario = "SISTEMA"
+        self.usuario2 = usuario
+        
 
         ##O escalonador.
-        self.escalonador = Escalonador.Escalonador(self)
+        self.escalonador = Escalonador.Escalonador(self, quantum)
         self.escalonador.start()
 
         ##Identidade do processo Kernel
@@ -26,8 +28,12 @@ class Kernel(threading.Thread):
         else:
             self.__globais[variavel] = (valor, sincronizada)
 
-    def novoProcesso(self):
+    def novoProcesso(self, nome, software, *arg):
+        novo = Processo.Processo(nome, self.usuario2, self.escalonador.contador, self, software, *arg)
+        self.escalonador.contador += 1
+        novo.start()
+        self.escalonador.novo(novo)
         pass
 
 
-kn = Kernel()
+#kn = Kernel()
