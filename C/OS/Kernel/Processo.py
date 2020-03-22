@@ -16,10 +16,10 @@ class Processo(threading.Thread):
         self.kernel = kernel #kernel do SO
 
         ## TODO preprocessamento
-        print(args)
-        self.programa = programa.replace("\n", "\nself.esperar()\n")
+        #print(args)
+        self.programa = self.formatar(programa)
         self.programa = self.programa%args
-        print(self.programa)
+        #print(self.programa)
         #self.programa = programa.split("\n") #codigo fonte do programa em python
         self.args = args #argumentos para o processo
 
@@ -64,6 +64,14 @@ class Processo(threading.Thread):
         self.fim()
 
     ##Esse metodo permite que o processo execute a proxima linha
+    def formatar(self, programa):
+        programa = programa.replace("    ", "\t")
+        programa = programa.split("\n")
+        saida = ""
+        for i in range(len(programa)-1, -1, -1):
+            saida = "\t"*programa[i].count("\t") + "self.esperar()" + "\n" + programa[i] + "\n" + saida
+        return saida
+        
     def passo(self):
         self.__evento.set()
 
