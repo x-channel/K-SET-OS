@@ -30,9 +30,10 @@ class Kernel(threading.Thread):
 
     def novoProcesso(self, nome, software, *arg):
         novo = Processo.Processo(nome, self.usuario2, self.escalonador.contador, self, software, *arg)
-        self.escalonador.contador += 1
-        novo.start()
         self.escalonador.novo(novo)
+    
+    def fim(self, processo):
+        self.escalonador.fim(processo)
 
 
 #kn = Kernel()

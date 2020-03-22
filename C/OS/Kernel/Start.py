@@ -20,4 +20,7 @@ varius(1, 2, 4, 5, 6)
 
 kn = Kernel.Kernel(usuario, quantum)
 
-kn.novoProcesso("printN", software["printN"], 5)
+kn.novoProcesso("printN", software["printN"], 50)
+kn.novoProcesso("printN", software["printN"], 40)
+kn.novoProcesso("printN", software["printN"], 30)
+kn.novoProcesso("printN", software["printN"], 20)

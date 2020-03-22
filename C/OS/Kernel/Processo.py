@@ -39,6 +39,7 @@ class Processo(threading.Thread):
             print("Fim do processo: ", self.nome)
             e = sys.exc_info()
             print(e)
+        self.fim()
 
     def runn(self):
         linha = 0
@@ -85,8 +86,7 @@ class Processo(threading.Thread):
 
     
     def fim(self):
-        #self.kernel.fim(self.identidade) ##TODO
-        pass
+        self.kernel.fim(self) ##TODO
 
 
 # exemplo de argumentos infinitos

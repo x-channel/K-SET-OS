@@ -11,7 +11,7 @@ class Escalonador(threading.Thread):
         self.kernel = kernel
         self.quantum = quantum
         
-        self.contador = 2 # Vai garantir que haja um PID unico
+        self.contador = 3 # Vai garantir que haja um PID unico
 
         self.tabela = []
         self.fila = []
@@ -27,6 +27,7 @@ class Escalonador(threading.Thread):
                 ##print(time.monotonic())
                 s0 = time.monotonic()
                 se = s0
+                print(i.nome, i.identidade)
                 try:
                     ##loop while, com as condicoes de tempo < self.quantum and falta de excecao and not end
                     while (s0 + self.quantum) > se:
@@ -42,11 +43,16 @@ class Escalonador(threading.Thread):
         pass
 
     def novo(self, processo):
-        pass
+        self.contador += 1
+        self.tabela.append(processo)
+        processo.start()
 
     def fim(self, processo):
-        ##Todas as referencias sao apagadas das listas tabela e fila
-        pass
+        if processo in self.tabela:
+            print("ui")
+            self.tabela.remove(processo)
 
     def ordenar(self, algoritmo = None):
-        pass
+        self.fila = []
+        for i in self.tabela:
+            self.fila.append(i)
