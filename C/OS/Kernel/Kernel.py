@@ -33,7 +33,6 @@ class Kernel(threading.Thread):
         self.escalonador.contador += 1
         novo.start()
         self.escalonador.novo(novo)
-        pass
 
 
 #kn = Kernel()

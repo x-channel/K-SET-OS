@@ -8,6 +8,7 @@ print(software)
 exec(software["printN"]%5)
 
 import Kernel
+import Processo
 
 def varius(*arg):
     st = "a "

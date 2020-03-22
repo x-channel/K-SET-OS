@@ -17,9 +17,10 @@ class Processo(threading.Thread):
 
         ## TODO preprocessamento
         print(args)
-        self.programa = programa%args
+        self.programa = programa.replace("\n", "\nself.esperar()\n")
+        self.programa = self.programa%args
         print(self.programa)
-        self.programa = programa.split("\n") #codigo fonte do programa em python
+        #self.programa = programa.split("\n") #codigo fonte do programa em python
         self.args = args #argumentos para o processo
 
         
@@ -29,8 +30,17 @@ class Processo(threading.Thread):
         self.saida = []
         
         self.__tempoTotal = 0.0
-
+    
     def run(self):
+        try:
+            exec(self.programa)
+        except:
+            print("Houve um erro doloroso")
+            print("Fim do processo: ", self.nome)
+            e = sys.exc_info()
+            print(e)
+
+    def runn(self):
         linha = 0
         #Este loop varre o programa linha a linha
         try:
@@ -57,6 +67,9 @@ class Processo(threading.Thread):
     def passo(self):
         self.__evento.set()
 
+    def esperar(self):
+        self.__evento.clear()
+        self.__evento.wait()
 
     ##Pausado?
     def pause(self):
@@ -82,10 +95,10 @@ prog0 = """print("Oi")
 print("Ai")
 print("Ui")"""
 
-prog = """print("Oi")
+prog = """print(self)
+print("Oi")
 print("Ai")
-print("Ui")
-print(self.args[0])"""
+print("Ui")"""
 
 processinho = Processo("Alexandre Frota", "SYSTEMA", "21", None, prog)
 
@@ -97,4 +110,4 @@ processinho.passo()
 time.sleep(0.1)
 processinho.passo()
 time.sleep(0.1)
-processinho.passo()
+#processinho.passo()

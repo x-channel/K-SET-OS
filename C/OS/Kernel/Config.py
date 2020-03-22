@@ -4,7 +4,7 @@ senha = "aaaa"
 quantum = 0.1
 
 software = {
-"printN":"""
+"printN":"""print("printN")
 N = %i
 for i in range(N):
 	print(i)
