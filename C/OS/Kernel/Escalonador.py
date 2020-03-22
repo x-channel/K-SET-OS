@@ -27,7 +27,7 @@ class Escalonador(threading.Thread):
                 ##print(time.monotonic())
                 s0 = time.monotonic()
                 se = s0
-                print(i.nome, i.identidade)
+                ##print(i.nome, i.identidade)
                 try:
                     ##loop while, com as condicoes de tempo < self.quantum and falta de excecao and not end
                     while (s0 + self.quantum) > se:
