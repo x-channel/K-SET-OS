@@ -25,11 +25,13 @@ class Processo(threading.Thread):
 
         
         self.__evento = threading.Event() #o evento que vai pausar a tread
+        self.chamada = threading.Event() #tambem vai pausar a tread, mas pela syscall
+        self.chamada.set()
 
         self.entrada = []
         self.saida = []
         
-        self.__tempoTotal = 0.0
+        self.tempoTotal = 0.0
     
     def run(self):
         try:
@@ -63,7 +65,10 @@ class Processo(threading.Thread):
             print(e)
         #Apos a conclusao, eh necessario fazer a chamada end
         self.fim()
-
+        
+    def saidaT(self):
+        pass
+        
     ##Esse metodo permite que o processo execute a proxima linha
     def formatar(self, programa):
         programa = programa.replace("    ", "\t")

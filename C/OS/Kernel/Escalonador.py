@@ -30,13 +30,14 @@ class Escalonador(threading.Thread):
                 ##print(i.nome, i.identidade)
                 try:
                     ##loop while, com as condicoes de tempo < self.quantum and falta de excecao and not end
-                    while (s0 + self.quantum) > se:
+                    while (s0 + self.quantum) > se and i.chamada.is_set():
                         ##Dentro do loop eh verificado se o processo.pause()
                         if i.pause():
                             ##Caso processo.pause() == True, o escalonador chama processo.passo()
                             i.passo()
                         ##Finalmente o escalonador atualiza o tempo.
                         se = time.monotonic()
+                    i.tempoTotal += (se - s0)
                 except:
                     print("Houve um erro")
                 ##Finalmente o escalonador atualiza o tempo decorrido dentro do Processo
@@ -49,7 +50,7 @@ class Escalonador(threading.Thread):
 
     def fim(self, processo):
         if processo in self.tabela:
-            print("ui")
+            print(processo.name, processo.identidade, processo.tempoTotal)
             self.tabela.remove(processo)
 
     def ordenar(self, algoritmo = None):

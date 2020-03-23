@@ -17,9 +17,17 @@ class Kernel(threading.Thread):
 
         ##Identidade do processo Kernel
         self.identidade = 1
+        
+        self.__evento = threading.Event() #o evento que vai pausar a tread
+        self.chamada = threading.Event() #tambem vai pausar a tread, mas pela syscall
+        self.chamada.set()
 
         ##Aqui estarao as variaveis globais
         self.globais = {} ##VARIAVEL: (VALOR, SINCR)
+        
+        self.chamadas = []
+        
+        self.tempoTotal = 0.0
 
     def globais(self, variavel, valor, processo, sincronizada = -1):
         if variavel in self.__globais:

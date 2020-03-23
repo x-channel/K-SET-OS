@@ -7,6 +7,6 @@ software = {
 "printN":"""print("printN")
 N = %i
 for i in range(N):
-	print(i)
+	self.saidaT(i)
 """
 }
