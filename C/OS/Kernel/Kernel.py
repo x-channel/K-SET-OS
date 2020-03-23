@@ -31,16 +31,18 @@ class Kernel(threading.Thread):
         
         self.tempoTotal = 0.0
     
-    def run(self):
+    def run(self): #Ha um erro aqui
         self.escalonador.tabela.append(self)
         self.escalonador.start()
         while 1:
             if len(self.chamadas) > 0:
                 self.chamada.set()
+                self.esperar()
                 caso = self.chamadas[0][0]
                 if (caso == "saidaT"):
                     self.saidaT(self.chamadas[0][1], self.chamadas[0][2], self.chamadas[0][3])
-            self.chamada.clear()
+            else:   self.chamada.clear()
+            
 
     def globais(self, variavel, valor, processo, sincronizada = -1):
         if variavel in self.__globais:
@@ -81,7 +83,11 @@ class Kernel(threading.Thread):
         return not (self.__evento.is_set())
     
     def passo(self):
-        pass
+        self.__evento.set()
+
+    def esperar(self):
+        self.__evento.clear()
+        self.__evento.wait()
 
 
 #kn = Kernel()

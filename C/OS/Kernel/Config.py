@@ -11,5 +11,7 @@ software = {
 N = %i
 for i in range(N):
     self.saidaT(i)
+tempo = "tempo total: " + str(self.tempoTotal)
+self.saidaT(tempo)
 """
 }
