@@ -83,12 +83,15 @@ class Processo(threading.Thread):
         programa = programa.split("\n")
         saida = ""
         for i in range(len(programa)-1, -1, -1):
-            saida = "\t"*programa[i].count("\t") + "self.esperar()" + "\n" + programa[i] + "\n" + saida
+            if "else" in programa[i] or "elif" in programa[i]:
+                saida = programa[i] + "\n" + saida
+            else:
+                saida = "\t"*programa[i].count("\t") + "self.esperar()" + "\n" + programa[i] + "\n" + saida
         ##cabecalho = "kernel = recuperar(%s, %i)\n"%(self.nome, self.identidade)
         ##cabecalho = "global kn\nkernel = kn.recuperar(%s, %i)\n"%(self.nome, self.identidade)
         ##saida = cabecalho + saida
         ##print("huummmmm")
-        print(saida)
+        ##print(saida)
         ##print(self)
         return saida
         
