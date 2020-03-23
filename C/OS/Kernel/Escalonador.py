@@ -1,5 +1,6 @@
 import threading
 import time
+import sys
 
 class Escalonador(threading.Thread):
     def __init__(self, kernel, quantum):
@@ -40,6 +41,9 @@ class Escalonador(threading.Thread):
                     i.tempoTotal += (se - s0)
                 except:
                     print("Houve um erro")
+                    e = sys.exc_info()
+                    print(e)
+                    time.sleep(5)
                 ##Finalmente o escalonador atualiza o tempo decorrido dentro do Processo
         pass
 
@@ -50,7 +54,7 @@ class Escalonador(threading.Thread):
 
     def fim(self, processo):
         if processo in self.tabela:
-            print(processo.name, processo.identidade, processo.tempoTotal)
+            #print(processo.name, processo.identidade, processo.tempoTotal)
             self.tabela.remove(processo)
 
     def ordenar(self, algoritmo = None):

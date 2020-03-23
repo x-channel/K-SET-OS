@@ -2,7 +2,7 @@
 import threading
 import time
 import sys
-
+from Config import *
 
 ####Definida a classe que representa 1 processo.
 ##Ele compreende o cabecalho que o SO leh
@@ -27,6 +27,7 @@ class Processo(threading.Thread):
         self.__evento = threading.Event() #o evento que vai pausar a tread
         self.chamada = threading.Event() #tambem vai pausar a tread, mas pela syscall
         self.chamada.set()
+        self.retorno = None
 
         self.entrada = []
         self.saida = []
@@ -38,7 +39,7 @@ class Processo(threading.Thread):
             exec(self.programa)
         except:
             print("Houve um erro doloroso")
-            print("Fim do processo: ", self.nome)
+            print("Fim do processo: %s"%self.nome)
             e = sys.exc_info()
             print(e)
         self.fim()
@@ -66,8 +67,15 @@ class Processo(threading.Thread):
         #Apos a conclusao, eh necessario fazer a chamada end
         self.fim()
         
-    def saidaT(self):
-        pass
+    def saidaT(self, valor):
+        ## adiciona a chamada a lista de chamadas do kernel
+        self.kernel.chamadas.append(("saidaT", self.nome, self.identidade, valor))
+        
+        # Espera a execucao da chamada
+        self.chamada.clear()
+        self.chamada.wait()
+        
+        return self.retorno
         
     ##Esse metodo permite que o processo execute a proxima linha
     def formatar(self, programa):
@@ -76,6 +84,12 @@ class Processo(threading.Thread):
         saida = ""
         for i in range(len(programa)-1, -1, -1):
             saida = "\t"*programa[i].count("\t") + "self.esperar()" + "\n" + programa[i] + "\n" + saida
+        ##cabecalho = "kernel = recuperar(%s, %i)\n"%(self.nome, self.identidade)
+        ##cabecalho = "global kn\nkernel = kn.recuperar(%s, %i)\n"%(self.nome, self.identidade)
+        ##saida = cabecalho + saida
+        ##print("huummmmm")
+        print(saida)
+        ##print(self)
         return saida
         
     def passo(self):
@@ -102,25 +116,25 @@ def soma(*args):
         total += i
     return total
 
+if False:
+    # exemplo de objeto da classe Processo()
+    prog0 = """print("Oi")
+    print("Ai")
+    print("Ui")"""
 
-# exemplo de objeto da classe Processo()
-prog0 = """print("Oi")
-print("Ai")
-print("Ui")"""
+    prog = """print(self)
+    print("Oi")
+    print("Ai")
+    print("Ui")"""
 
-prog = """print(self)
-print("Oi")
-print("Ai")
-print("Ui")"""
+    processinho = Processo("Alexandre Frota", "SYSTEMA", "21", None, prog)
 
-processinho = Processo("Alexandre Frota", "SYSTEMA", "21", None, prog)
-
-# botando ele para funcionar na manivela
-processinho.start()
-time.sleep(0.1)
-print(processinho.pause())
-processinho.passo()
-time.sleep(0.1)
-processinho.passo()
-time.sleep(0.1)
-#processinho.passo()
+    # botando ele para funcionar na manivela
+    processinho.start()
+    time.sleep(0.1)
+    print(processinho.pause())
+    processinho.passo()
+    time.sleep(0.1)
+    processinho.passo()
+    time.sleep(0.1)
+    #processinho.passo()

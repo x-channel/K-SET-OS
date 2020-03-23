@@ -37,6 +37,9 @@ class Kernel(threading.Thread):
         while 1:
             if len(self.chamadas) > 0:
                 self.chamada.set()
+                caso = self.chamadas[0][0]
+                if (caso == "saidaT"):
+                    self.saidaT(self.chamadas[0][1], self.chamadas[0][2], self.chamadas[0][3])
             self.chamada.clear()
 
     def globais(self, variavel, valor, processo, sincronizada = -1):
@@ -52,6 +55,33 @@ class Kernel(threading.Thread):
     
     def fim(self, processo):
         self.escalonador.fim(processo)
+    
+    def saidaT(self, nome, identidade, valor):
+        processo = self.encontrar(nome, identidade)
+        try:
+            if (not processo.chamada.is_set()):
+                processo.retorno = 1
+                processo.chamada.set()
+                self.chamadas.pop(0)
+                self.terminalS.saida(nome, identidade, valor)
+        except:
+            print("erro na chamada do sistema")
+            self.chamadas.pop(0)
+    
+    def encontrar(self, nome, identidade):
+        tabela = self.escalonador.tabela
+        for i in tabela:
+            if (i.nome == nome):
+                if (i.identidade == identidade):
+                    return i
+        return None
+    
+    ##Pausado?
+    def pause(self):
+        return not (self.__evento.is_set())
+    
+    def passo(self):
+        pass
 
 
 #kn = Kernel()
