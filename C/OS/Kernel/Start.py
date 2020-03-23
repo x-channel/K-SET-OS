@@ -19,6 +19,7 @@ def varius(*arg):
 varius(1, 2, 4, 5, 6)
 
 kn = Kernel.Kernel(usuario, quantum)
+kn.start()
 
 kn.novoProcesso("printN", software["printN"], 50)
 kn.novoProcesso("printN", software["printN"], 40)

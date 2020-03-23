@@ -2,6 +2,7 @@ import os
 import threading
 import Escalonador
 import Processo
+import Terminal
 
 class Kernel(threading.Thread):
     def __init__(self, usuario, quantum):
@@ -13,14 +14,15 @@ class Kernel(threading.Thread):
 
         ##O escalonador.
         self.escalonador = Escalonador.Escalonador(self, quantum)
-        self.escalonador.start()
+        
+        self.terminalS = Terminal.Saida()
 
         ##Identidade do processo Kernel
         self.identidade = 1
         
         self.__evento = threading.Event() #o evento que vai pausar a tread
         self.chamada = threading.Event() #tambem vai pausar a tread, mas pela syscall
-        self.chamada.set()
+        self.chamada.clear()
 
         ##Aqui estarao as variaveis globais
         self.globais = {} ##VARIAVEL: (VALOR, SINCR)
@@ -28,6 +30,14 @@ class Kernel(threading.Thread):
         self.chamadas = []
         
         self.tempoTotal = 0.0
+    
+    def run(self):
+        self.escalonador.tabela.append(self)
+        self.escalonador.start()
+        while 1:
+            if len(self.chamadas) > 0:
+                self.chamada.set()
+            self.chamada.clear()
 
     def globais(self, variavel, valor, processo, sincronizada = -1):
         if variavel in self.__globais:
