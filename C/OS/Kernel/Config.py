@@ -28,5 +28,41 @@ else:
     valor = 1
 self.saidaT(valor)
 tempo = "tempo total: " + str(self.tempoTotal)
+self.saidaT(tempo)""",
+
+"mulB":
+"""N = %f
+M = %i
+V = "%s"
+at = self.variavelInsta(V, 1.0)
+self.bandeira(V)
+self.turno(V)
+while(not self.verde(V)):
+    pass
+at = self.variavelInsta(V, 0.0)
+for i in range(M):
+    at *= N
+    at = self.variavelInsta(V, at, "sobrescrever")
+self.saidaT(at)
+self.liberar(V)
+tempo = "tempo total: " + str(self.tempoTotal)
+self.saidaT(tempo)""",
+
+"adB":
+"""N = %f
+M = %i
+V = "%s"
+at = self.variavelInsta(V, 0.0)
+self.bandeira(V)
+self.turno(V)
+while(not self.verde(V)):
+    pass
+at = self.variavelInsta(V, 0.0)
+for i in range(M):
+    at += N
+    at = self.variavelInsta(V, at, "sobrescrever")
+self.saidaT(at)
+self.liberar(V)
+tempo = "tempo total: " + str(self.tempoTotal)
 self.saidaT(tempo)"""
 }

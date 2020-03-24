@@ -3,7 +3,7 @@ from Config import *
 
 print(usuario)
 
-print(software)
+#print(software)
 
 #exec(software["printN"]%5)
 
@@ -29,15 +29,21 @@ def recuperar(nome, identidade):
 
 ##print(software["fibonacciN"])
 
-kn.novoProcesso("printN", 4, software["printN"], 50)
-kn.novoProcesso("printN", 3, software["printN"], 40)
-kn.novoProcesso("printN", 2, software["printN"], 30)
+kn.novoProcesso("mulB", 2, software["mulB"], 2.4, 20, "A")
+kn.novoProcesso("mulB", 2, software["mulB"], 2.1, 21, "A")
+
+kn.novoProcesso("adB", 2, software["mulB"], 2.4, 20, "B")
+kn.novoProcesso("adB", 2, software["mulB"], 2.1, 21, "B")
+
+##kn.novoProcesso("printN", 4, software["printN"], 50)
+##kn.novoProcesso("printN", 3, software["printN"], 40)
+##kn.novoProcesso("printN", 2, software["printN"], 30)
 kn.novoProcesso("printN", 2, software["printN"], 20)
 
-kn.novoProcesso("Fibonacci", 1, software["fibonacciN"], 1)
+##kn.novoProcesso("Fibonacci", 1, software["fibonacciN"], 1)
 kn.novoProcesso("Fibonacci", 1, software["fibonacciN"], 10)
-kn.novoProcesso("Fibonacci", 1, software["fibonacciN"], 200)
-kn.novoProcesso("Fibonacci", 1, software["fibonacciN"], 100)
+##kn.novoProcesso("Fibonacci", 1, software["fibonacciN"], 200)
+##kn.novoProcesso("Fibonacci", 1, software["fibonacciN"], 100)
 
 #print("teste")
 #print(recuperar("printN", 3))

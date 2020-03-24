@@ -27,7 +27,7 @@ class Kernel(threading.Thread):
         self.chamada.clear()
 
         ##Aqui estarao as variaveis globais
-        self.globais = {} ##VARIAVEL: (VALOR, SINCR, turno, flags)
+        self.globais = {} ##VARIAVEL: (VALOR, turno, flags)
         
         self.chamadas = []
         
@@ -90,6 +90,9 @@ class Kernel(threading.Thread):
     def esperar(self):
         self.__evento.clear()
         self.__evento.wait()
+    
+    def variavel(self, processo, vari, valor, act = "pegar"): #pegar ou sobrescrever
+        pass
 
 
 #kn = Kernel()

@@ -19,6 +19,7 @@ class Processo(threading.Thread):
         ## TODO preprocessamento
         #print(args)
         self.programa = self.formatar(programa)
+        #print(self.programa)
         self.programa = self.programa%args
         #print(self.programa)
         #self.programa = programa.split("\n") #codigo fonte do programa em python
@@ -110,6 +111,21 @@ class Processo(threading.Thread):
     
     def fim(self):
         self.kernel.fim(self) ##TODO
+    
+    def variavelInsta(self, vari, valor, act = "pegar"):
+        return self.kernel.variavel(self, vari, valor, act)
+    
+    def bandeira(self, vari):
+        pass
+    
+    def turno(self, vari):
+        pass
+    
+    def verde(self, vari):
+        return True
+    
+    def liberar(self, vari):
+        pass
 
 
 # exemplo de argumentos infinitos
