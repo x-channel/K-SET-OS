@@ -13,22 +13,22 @@ Os scripts serão preprocessados para poderem rodar dentro da classe Processo. U
 
 ## Chamadas do sistema
 
-### kernel.global(variavel, valor, sincronizada = -1)
+### self.global(variavel, valor, sincronizada = -1)
 Cria ou altera uma variável global.
 
-### kernel.sincronizar(variavel)
+### self.sincronizar(variavel)
 Avisa ao SO que o script chegou a um ponto crítico e quer este recurso.
 
-### kernel.liberar(variavel)
+### self.liberar(variavel)
 Avisa ao SO que o recurso já está disponível.
 
-### kernel.input()
+### self.input()
 Pede uma entrada do teclado para o kernel.
 Está em inglês por fazer a mesma coisa que a função build in.
 
-### kernel.print(texto)
+### self.print(texto)
 Envia um texto para o kernel imprimir na tela.
 Isso pode parecer desnecessário, mas o simulador todo é desnecessário. Então vamos apenas abrir um sorriso e se divertir com esses detalhes.
 
-### kernel.fim(identificador)
+### self.fim(identificador)
 Avisa ao SO que o processo foi concluído.
