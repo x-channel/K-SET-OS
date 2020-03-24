@@ -47,7 +47,7 @@ print("Tempo medio turnaround")
 print(kn.escalonador.turnaround())
 
 while len(kn.escalonador.tabela) != 1:
-    time.sleep(1)
+    time.sleep(3)
 
 print("Tempo medio turnaround")
 print(kn.escalonador.turnaround())
