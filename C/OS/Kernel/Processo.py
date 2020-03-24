@@ -8,12 +8,13 @@ from Config import *
 ##Ele compreende o cabecalho que o SO leh
 ##Tambem compreende o codigo do software que esta executando
 class Processo(threading.Thread):
-    def __init__(self, nome, usuario, identidade, kernel, programa, *args):
+    def __init__(self, nome, usuario, identidade, kernel, prioridade, programa, *args):
         threading.Thread.__init__(self, name=nome)
         self.nome = nome
         self.usuario = usuario
         self.identidade = identidade #id unico do processo
         self.kernel = kernel #kernel do SO
+        self.prioridade = prioridade
 
         ## TODO preprocessamento
         #print(args)

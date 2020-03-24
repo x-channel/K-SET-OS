@@ -5,7 +5,7 @@ import Processo
 import Terminal
 
 class Kernel(threading.Thread):
-    def __init__(self, usuario, quantum):
+    def __init__(self, usuario, quantum, algoritmo):
         threading.Thread.__init__(self, name = "Kernel")
         self.nome = "Kernel"
         self.usuario = "SISTEMA"
@@ -13,12 +13,14 @@ class Kernel(threading.Thread):
         
 
         ##O escalonador.
-        self.escalonador = Escalonador.Escalonador(self, quantum)
+        self.escalonador = Escalonador.Escalonador(self, quantum, algoritmo)
         
         self.terminalS = Terminal.Saida()
 
         ##Identidade do processo Kernel
         self.identidade = 1
+        
+        self.prioridade = 5
         
         self.__evento = threading.Event() #o evento que vai pausar a tread
         self.chamada = threading.Event() #tambem vai pausar a tread, mas pela syscall
@@ -51,8 +53,8 @@ class Kernel(threading.Thread):
         else:
             self.__globais[variavel] = (valor, sincronizada)
 
-    def novoProcesso(self, nome, software, *arg):
-        novo = Processo.Processo(nome, self.usuario2, self.escalonador.contador, self, software, *arg)
+    def novoProcesso(self, nome, prioridade, software, *arg):
+        novo = Processo.Processo(nome, self.usuario2, self.escalonador.contador, self, prioridade, software, *arg)
         self.escalonador.novo(novo)
     
     def fim(self, processo):

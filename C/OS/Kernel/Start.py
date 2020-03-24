@@ -19,7 +19,7 @@ def varius(*arg):
 varius(1, 2, 4, 5, 6)
 
 
-kn = Kernel.Kernel(usuario, quantum)
+kn = Kernel.Kernel(usuario, quantum, escalonador[1])
 kn.start()
 
 def recuperar(nome, identidade):
@@ -28,15 +28,15 @@ def recuperar(nome, identidade):
 
 ##print(software["fibonacciN"])
 
-kn.novoProcesso("printN", software["printN"], 50)
-kn.novoProcesso("printN", software["printN"], 40)
-kn.novoProcesso("printN", software["printN"], 30)
-kn.novoProcesso("printN", software["printN"], 20)
+kn.novoProcesso("printN", 4, software["printN"], 50)
+kn.novoProcesso("printN", 3, software["printN"], 40)
+kn.novoProcesso("printN", 2, software["printN"], 30)
+kn.novoProcesso("printN", 2, software["printN"], 20)
 
-kn.novoProcesso("Fibonacci", software["fibonacciN"], 1)
-kn.novoProcesso("Fibonacci", software["fibonacciN"], 10)
-kn.novoProcesso("Fibonacci", software["fibonacciN"], 200)
-kn.novoProcesso("Fibonacci", software["fibonacciN"], 100)
+kn.novoProcesso("Fibonacci", 1, software["fibonacciN"], 1)
+kn.novoProcesso("Fibonacci", 1, software["fibonacciN"], 10)
+kn.novoProcesso("Fibonacci", 1, software["fibonacciN"], 200)
+kn.novoProcesso("Fibonacci", 1, software["fibonacciN"], 100)
 
 #print("teste")
 #print(recuperar("printN", 3))

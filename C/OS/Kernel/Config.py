@@ -5,6 +5,7 @@ senha = "aaaa"
 
 quantum = 0.2
 
+escalonador = ["Round Robin", "Loteria"]
 
 software = {
 "printN":

@@ -1,9 +1,10 @@
 import threading
 import time
 import sys
+import random
 
 class Escalonador(threading.Thread):
-    def __init__(self, kernel, quantum):
+    def __init__(self, kernel, quantum, algoritmo):
         threading.Thread.__init__(self, name="Escalonador")
         self.nome = "Escalonador"
         self.usuario = "SISTEMA"
@@ -11,6 +12,7 @@ class Escalonador(threading.Thread):
 
         self.kernel = kernel
         self.quantum = quantum
+        self.algoritmo = algoritmo
         
         self.contador = 3 # Vai garantir que haja um PID unico
 
@@ -20,7 +22,7 @@ class Escalonador(threading.Thread):
     def run(self):
         ##O escalonador eh um loop infinito
         while 1:
-            self.ordenar()
+            self.ordenar(self.algoritmo)
             for i in self.fila:
                 ##O escalonador escolhe o Processo
                 ##O escalonador reorganiza a fila
@@ -58,6 +60,13 @@ class Escalonador(threading.Thread):
             self.tabela.remove(processo)
 
     def ordenar(self, algoritmo = None):
-        self.fila = []
-        for i in self.tabela:
-            self.fila.append(i)
+        if algoritmo == "Round Robin":
+            self.fila = []
+            for i in self.tabela:
+                self.fila.append(i)
+        elif algoritmo == "Loteria":
+            self.fila = []
+            for i in self.tabela:
+                for j in range(i.prioridade):
+                    self.fila.append(i)
+            self.fila = [random.choice(self.fila)]
