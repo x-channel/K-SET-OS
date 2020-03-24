@@ -9,6 +9,7 @@ print(software)
 
 import Kernel
 import Processo
+import time
 
 def varius(*arg):
     st = "a "
@@ -19,7 +20,7 @@ def varius(*arg):
 varius(1, 2, 4, 5, 6)
 
 
-kn = Kernel.Kernel(usuario, quantum, escalonador[1])
+kn = Kernel.Kernel(usuario, quantum, escalonador[0])
 kn.start()
 
 def recuperar(nome, identidade):
@@ -40,3 +41,13 @@ kn.novoProcesso("Fibonacci", 1, software["fibonacciN"], 100)
 
 #print("teste")
 #print(recuperar("printN", 3))
+
+time.sleep(5)
+print("Tempo medio turnaround")
+print(kn.escalonador.turnaround())
+
+while len(kn.escalonador.tabela) != 1:
+    time.sleep(1)
+
+print("Tempo medio turnaround")
+print(kn.escalonador.turnaround())

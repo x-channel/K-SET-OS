@@ -18,9 +18,14 @@ class Escalonador(threading.Thread):
 
         self.tabela = []
         self.fila = []
+        
+        self.tempoInicial = 0
+        self.tempoUtil = 0
+        self.turnos = 0
 
     def run(self):
         ##O escalonador eh um loop infinito
+        self.tempoInicial = time.monotonic()
         while 1:
             self.ordenar(self.algoritmo)
             for i in self.fila:
@@ -30,6 +35,7 @@ class Escalonador(threading.Thread):
                 ##print(time.monotonic())
                 s0 = time.monotonic()
                 se = s0
+                self.turnos += 1
                 ##print(i.nome, i.identidade)
                 try:
                     ##loop while, com as condicoes de tempo < self.quantum and falta de excecao and not end
@@ -57,6 +63,7 @@ class Escalonador(threading.Thread):
     def fim(self, processo):
         if processo in self.tabela:
             #print(processo.name, processo.identidade, processo.tempoTotal)
+            self.tempoUtil += processo.tempoTotal
             self.tabela.remove(processo)
 
     def ordenar(self, algoritmo = None):
@@ -70,3 +77,11 @@ class Escalonador(threading.Thread):
                 for j in range(i.prioridade):
                     self.fila.append(i)
             self.fila = [random.choice(self.fila)]
+    
+    def turnaround(self):
+        agora = time.monotonic()
+        ativos = 0
+        for i in self.tabela:
+            ativos += i.tempoTotal
+        tmta = (agora - self.tempoInicial + ativos + self.tempoUtil)/float(self.turnos)
+        return tmta
