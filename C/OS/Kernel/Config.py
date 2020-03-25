@@ -66,5 +66,33 @@ at = self.variavelInsta(V, at, "sobrescrever")
 self.saidaT(at)
 self.liberar(V)
 tempo = "tempo total: " + str(self.tempoTotal)
+self.saidaT(tempo)""",
+
+"mul":
+"""N = %f
+M = %i
+V = "%s"
+at = self.variavel(V, 1.0)
+self.sincronizar(V)
+for i in range(M):
+    at *= N
+at = self.variavel(V, at, "sobrescrever")
+self.saidaT(at)
+self.dessincronizar(V)
+tempo = "tempo total: " + str(self.tempoTotal)
+self.saidaT(tempo)""",
+
+"ad":
+"""N = %f
+M = %i
+V = "%s"
+at = self.variavel(V, 1.0)
+self.sincronizar(V)
+for i in range(M):
+    at += N
+at = self.variavel(V, at, sobrescrever)
+self.saidaT(at)
+self.dessincronizar(V)
+tempo = "tempo total: " + str(self.tempoTotal)
 self.saidaT(tempo)"""
 }

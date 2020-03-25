@@ -45,6 +45,12 @@ class Kernel(threading.Thread):
                 caso = self.chamadas[0][0]
                 if (caso == "saidaT"):
                     self.saidaT(self.chamadas[0][1], self.chamadas[0][2], self.chamadas[0][3])
+                elif (caso == "variavel"):
+                    pass
+                elif (caso == "sincronizar"):
+                    pass
+                elif (caso == "dessincronizar"):
+                    pass
             else:   self.chamada.clear()
             
 
@@ -74,6 +80,18 @@ class Kernel(threading.Thread):
             print("erro na chamada do sistema")
             self.chamadas.pop(0)
     
+    def variavel(self, nome, identidade, vari, valor, act):
+        processo = self.encontrar(nome, identidade)
+        pass
+    
+    def sincronizar(self, nome, identidade, vari):
+        processo = self.encontrar(nome, identidade)
+        self.chamada.clear()
+    
+    def dessincronizar(self, nome, identidade, vari):
+        processo = self.encontrar(nome, identidade)
+        pass
+    
     def encontrar(self, nome, identidade):
         tabela = self.escalonador.tabela
         for i in tabela:
@@ -93,7 +111,7 @@ class Kernel(threading.Thread):
         self.__evento.clear()
         self.__evento.wait()
     
-    def variavel(self, processo, vari, valor, act = "pegar"): #pegar ou sobrescrever
+    def variavelInsta(self, processo, vari, valor, act = "pegar"): #pegar ou sobrescrever
         pr = "%s %i"%(processo.nome, processo.identidade)
         if act == "pegar" and vari in self.globais:
             pass

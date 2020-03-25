@@ -29,11 +29,19 @@ def recuperar(nome, identidade):
 
 ##print(software["fibonacciN"])
 
+##Processos com busy wait Peterson
 kn.novoProcesso("mulB", 2, software["mulB"], 2.4, 20, "A")
 kn.novoProcesso("mulB", 2, software["mulB"], 2.1, 21, "A")
 
 kn.novoProcesso("adB", 2, software["adB"], 2.4, 20, "B")
 kn.novoProcesso("adB", 2, software["adB"], 2.1, 21, "B")
+
+##Procesos sem busy wait
+kn.novoProcesso("mul", 2, software["mul"], 2.4, 20, "C")
+kn.novoProcesso("mul", 2, software["mul"], 2.1, 21, "C")
+
+kn.novoProcesso("ad", 2, software["ad"], 2.4, 20, "D")
+kn.novoProcesso("ad", 2, software["ad"], 2.1, 21, "D")
 
 ##kn.novoProcesso("printN", 4, software["printN"], 50)
 ##kn.novoProcesso("printN", 3, software["printN"], 40)

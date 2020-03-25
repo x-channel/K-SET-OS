@@ -114,7 +114,7 @@ class Processo(threading.Thread):
     
     def variavelInsta(self, vari, valor, act = "pegar"):
         pr = "%s %i"%(self.nome, self.identidade)
-        return self.kernel.variavel(self, vari, valor, act)
+        return self.kernel.variavelInsta(self, vari, valor, act)
     
     def bandeira(self, vari):
         self.kernel.bandeira(self, vari)
@@ -137,6 +137,36 @@ class Processo(threading.Thread):
             return True
         else:
             return False
+    
+    def variavel(self, vari, valor, act = "pegar"):
+        ## adiciona a chamada a lista de chamadas do kernel
+        self.kernel.chamadas.append(("variavel", self.nome, self.identidade, vari, valor, act))
+        
+        # Espera a execucao da chamada
+        self.chamada.clear()
+        self.chamada.wait()
+        
+        return self.retorno
+    
+    def sincronizar(self, vari):
+        ## adiciona a chamada a lista de chamadas do kernel
+        self.kernel.chamadas.append(("sincronizar", self.nome, self.identidade, vari))
+        
+        # Espera a execucao da chamada
+        self.chamada.clear()
+        self.chamada.wait()
+        
+        return self.retorno
+    
+    def dessincronizar(self, vari):
+        ## adiciona a chamada a lista de chamadas do kernel
+        self.kernel.chamadas.append(("dessincronizar", self.nome, self.identidade, vari))
+        
+        # Espera a execucao da chamada
+        self.chamada.clear()
+        self.chamada.wait()
+        
+        return self.retorno
 
 
 # exemplo de argumentos infinitos
