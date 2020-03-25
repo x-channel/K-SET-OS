@@ -3,6 +3,7 @@ import threading
 import Escalonador
 import Processo
 import Terminal
+import random
 
 class Kernel(threading.Thread):
     def __init__(self, usuario, quantum, algoritmo):
@@ -28,6 +29,7 @@ class Kernel(threading.Thread):
 
         ##Aqui estarao as variaveis globais
         self.globais = {} ##VARIAVEL: (VALOR, turno, flags)
+        self.__globais = {}
         
         self.chamadas = []
         
@@ -92,7 +94,42 @@ class Kernel(threading.Thread):
         self.__evento.wait()
     
     def variavel(self, processo, vari, valor, act = "pegar"): #pegar ou sobrescrever
-        pass
-
+        pr = "%s %i"%(processo.nome, processo.identidade)
+        if act == "pegar" and vari in self.globais:
+            pass
+        elif not vari in self.globais:
+            self.globais[vari] = (valor, pr, {pr:False})
+        else:
+            dc = self.globais[vari][2]
+            if not pr in dc:
+                dc[pr] = False
+            vez = self.globais[vari][1]
+            self.globais[vari] = (valor, vez, dc)
+        return self.globais[vari][0]
+    
+    def bandeira(self, processo, vari):
+        pr = "%s %i"%(processo.nome, processo.identidade)
+        self.globais[vari][2][pr] = True
+    
+    def verde(self, pr, vari):
+        j = self.globais[vari][2]
+        for i in j:
+            if i != pr:
+                if j[i] == True:
+                    return False
+        return True
+    
+    def turno(self, vari):
+        j = self.globais[vari][2]
+        t = False
+        for i in j:
+            t = t or j[i]
+        if t:
+            i = random.choice(list(j))
+            while not j[i]:
+                i = random.choice(list(j))
+            valor = self.globais[vari][0]
+            self.globais[vari] = (valor, i, j)
+        
 
 #kn = Kernel()

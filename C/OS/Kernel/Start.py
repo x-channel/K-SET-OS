@@ -32,8 +32,8 @@ def recuperar(nome, identidade):
 kn.novoProcesso("mulB", 2, software["mulB"], 2.4, 20, "A")
 kn.novoProcesso("mulB", 2, software["mulB"], 2.1, 21, "A")
 
-kn.novoProcesso("adB", 2, software["mulB"], 2.4, 20, "B")
-kn.novoProcesso("adB", 2, software["mulB"], 2.1, 21, "B")
+kn.novoProcesso("adB", 2, software["adB"], 2.4, 20, "B")
+kn.novoProcesso("adB", 2, software["adB"], 2.1, 21, "B")
 
 ##kn.novoProcesso("printN", 4, software["printN"], 50)
 ##kn.novoProcesso("printN", 3, software["printN"], 40)
@@ -48,12 +48,14 @@ kn.novoProcesso("Fibonacci", 1, software["fibonacciN"], 10)
 #print("teste")
 #print(recuperar("printN", 3))
 
+#print(kn.globais)
+
 time.sleep(5)
 print("Tempo medio turnaround")
 print(kn.escalonador.turnaround())
 
-while len(kn.escalonador.tabela) != 1:
-    time.sleep(3)
+##while len(kn.escalonador.tabela) != 1:
+    ##time.sleep(3)
 
 print("Tempo medio turnaround")
 print(kn.escalonador.turnaround())

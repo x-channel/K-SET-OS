@@ -113,19 +113,30 @@ class Processo(threading.Thread):
         self.kernel.fim(self) ##TODO
     
     def variavelInsta(self, vari, valor, act = "pegar"):
+        pr = "%s %i"%(self.nome, self.identidade)
         return self.kernel.variavel(self, vari, valor, act)
     
     def bandeira(self, vari):
-        pass
+        self.kernel.bandeira(self, vari)
     
     def turno(self, vari):
-        pass
+        self.kernel.turno(vari)
     
     def verde(self, vari):
-        return True
+        pr = "%s %i"%(self.nome, self.identidade)
+        return self.kernel.verde(pr, vari)
     
     def liberar(self, vari):
-        pass
+        pr = "%s %i"%(self.nome, self.identidade)
+        self.kernel.globais[vari][2][pr] = False
+        self.kernel.turno(vari)
+    
+    def quem(self, vari):
+        pr = "%s %i"%(self.nome, self.identidade)
+        if (self.kernel.globais[vari][1] == pr):
+            return True
+        else:
+            return False
 
 
 # exemplo de argumentos infinitos
