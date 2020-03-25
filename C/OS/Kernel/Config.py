@@ -3,7 +3,7 @@ import Kernel
 usuario = "Afeto"
 senha = "aaaa"
 
-quantum = 0.2
+quantum = 5.1
 
 escalonador = ["Round Robin", "Loteria"]
 
@@ -74,6 +74,7 @@ M = %i
 V = "%s"
 at = self.variavel(V, 1.0)
 self.sincronizar(V)
+at = self.variavel(V, 1.0)
 for i in range(M):
     at *= N
 at = self.variavel(V, at, "sobrescrever")
@@ -86,11 +87,12 @@ self.saidaT(tempo)""",
 """N = %f
 M = %i
 V = "%s"
-at = self.variavel(V, 1.0)
+at = self.variavel(V, 0.0)
 self.sincronizar(V)
+at = self.variavel(V, 0.0)
 for i in range(M):
     at += N
-at = self.variavel(V, at, sobrescrever)
+at = self.variavel(V, at, "sobrescrever")
 self.saidaT(at)
 self.dessincronizar(V)
 tempo = "tempo total: " + str(self.tempoTotal)

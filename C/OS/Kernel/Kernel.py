@@ -4,6 +4,7 @@ import Escalonador
 import Processo
 import Terminal
 import random
+import sys
 
 class Kernel(threading.Thread):
     def __init__(self, usuario, quantum, algoritmo):
@@ -77,34 +78,61 @@ class Kernel(threading.Thread):
                 self.chamadas.pop(0)
                 self.terminalS.saida(nome, identidade, valor)
         except:
-            print("erro na chamada do sistema")
+            print("erro na chamada do sistema saidaT()")
             self.chamadas.pop(0)
     
     def variavel(self, nome, identidade, vari, valor, act):
         processo = self.encontrar(nome, identidade)
         try:
             if (not processo.chamada.is_set()):
-                pass
+                if act == "pegar" and vari in self.globais:
+                    ##print("isso tem que ocorrer uma vez %s %i %f"%(nome, identidade, self.globais[vari][0]))
+                    pass
+                elif not vari in self.globais:
+                    self.globais[vari] = (valor, "")
+                else:
+                    tp = self.globais[vari]
+                    self.globais[vari] = (valor, tp[1])
+                processo.retorno = self.globais[vari][0]
+                processo.chamada.set()
+                self.chamadas.pop(0)
         except:
-            print("erro na chamada do sistema")
+            print("erro na chamada do sistema variavel()")
+            e = sys.exc_info()
+            print(e)
             self.chamadas.pop(0)
     
     def sincronizar(self, nome, identidade, vari):
         processo = self.encontrar(nome, identidade)
+        pr = "%s %i"%(nome, identidade)
         try:
             if (not processo.chamada.is_set()):
-                pass
+                if self.globais[vari][1] == "":
+                    tp = self.globais[vari]
+                    self.globais[vari] = (tp[0], pr)
+                    processo.retorno = 1
+                    processo.chamada.set()
+                    self.chamadas.pop(0)
+                else:
+                    el = self.chamadas[0]
+                    self.chamadas.pop(0)
+                    self.chamadas.append(el)
+                    self.chamada.clear()
         except:
-            print("erro na chamada do sistema")
+            print("erro na chamada do sistema sincronizar()")
             self.chamadas.pop(0)
     
     def dessincronizar(self, nome, identidade, vari):
         processo = self.encontrar(nome, identidade)
         try:
             if (not processo.chamada.is_set()):
-                pass
+                processo.retorno = 1
+                tp = self.globais[vari]
+                self.globais[vari] = (tp[0], "")
+                processo.chamada.set()
+                self.chamadas.pop(0)
         except:
-            print("erro na chamada do sistema")
+            print("erro na chamada do sistema dessincronizar()")
             self.chamadas.pop(0)
     
     def encontrar(self, nome, identidade):
