@@ -28,7 +28,7 @@ class Kernel(threading.Thread):
         self.chamada.clear()
 
         ##Aqui estarao as variaveis globais
-        self.globais = {} ##VARIAVEL: (VALOR, turno, flags)
+        self.globais = {} ##VARIAVEL: (VALOR, turno, flags) ou ##VARIAVEL: (VALOR, SYNC)
         self.__globais = {}
         
         self.chamadas = []
@@ -46,11 +46,11 @@ class Kernel(threading.Thread):
                 if (caso == "saidaT"):
                     self.saidaT(self.chamadas[0][1], self.chamadas[0][2], self.chamadas[0][3])
                 elif (caso == "variavel"):
-                    pass
+                    self.variavel(self.chamadas[0][1], self.chamadas[0][2], self.chamadas[0][3], self.chamadas[0][4], self.chamadas[0][5])
                 elif (caso == "sincronizar"):
-                    pass
+                    self.sincronizar(self.chamadas[0][1], self.chamadas[0][2], self.chamadas[0][3])
                 elif (caso == "dessincronizar"):
-                    pass
+                    self.dessincronizar(self.chamadas[0][1], self.chamadas[0][2], self.chamadas[0][3])
             else:   self.chamada.clear()
             
 
@@ -82,15 +82,30 @@ class Kernel(threading.Thread):
     
     def variavel(self, nome, identidade, vari, valor, act):
         processo = self.encontrar(nome, identidade)
-        pass
+        try:
+            if (not processo.chamada.is_set()):
+                pass
+        except:
+            print("erro na chamada do sistema")
+            self.chamadas.pop(0)
     
     def sincronizar(self, nome, identidade, vari):
         processo = self.encontrar(nome, identidade)
-        self.chamada.clear()
+        try:
+            if (not processo.chamada.is_set()):
+                pass
+        except:
+            print("erro na chamada do sistema")
+            self.chamadas.pop(0)
     
     def dessincronizar(self, nome, identidade, vari):
         processo = self.encontrar(nome, identidade)
-        pass
+        try:
+            if (not processo.chamada.is_set()):
+                pass
+        except:
+            print("erro na chamada do sistema")
+            self.chamadas.pop(0)
     
     def encontrar(self, nome, identidade):
         tabela = self.escalonador.tabela
